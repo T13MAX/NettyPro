@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * BIO 传统的java io,blocking io
  * @Author 呆呆
  * @Datetime 2021/9/11 11:27
  */
