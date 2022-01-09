@@ -10,6 +10,9 @@ import java.util.concurrent.Executors;
 
 /**
  * BIO 传统的java io,blocking io
+ * 一个线程对应一个连接
+ * NIO有选择器(多路复用器) 一个线程通过选择器同时处理多个连接
+ *
  * @Author 呆呆
  * @Datetime 2021/9/11 11:27
  */
@@ -17,9 +20,8 @@ public class BIOServer {
     public static void main(String[] args) throws Exception{
 
         //1线程池
-
         //2如果有客户端连接 就创建一个线程 与之通讯(写一个单独的方法
-
+        //ExecutorService是一个线程池接口
         ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();
 
         //创建一个ServerSocket

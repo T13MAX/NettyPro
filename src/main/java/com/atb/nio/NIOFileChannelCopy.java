@@ -29,6 +29,7 @@ public class NIOFileChannelCopy {
             //将buffer中的数据写入到channelWrite里
             byteBuffer.flip();
             channelWrite.write(byteBuffer);
+            //byteBuffer.flip();//不是必须上面clear 这里在转回去就ok了
         }
 
         //关闭流

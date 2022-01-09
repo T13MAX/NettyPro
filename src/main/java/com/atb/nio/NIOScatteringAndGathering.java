@@ -26,35 +26,35 @@ public class NIOScatteringAndGathering {
 
         //创建buffer数组
         ByteBuffer[] byteBuffers = new ByteBuffer[2];
-        byteBuffers[0]=ByteBuffer.allocate(5);
-        byteBuffers[1]=ByteBuffer.allocate(3);
+        byteBuffers[0] = ByteBuffer.allocate(5);
+        byteBuffers[1] = ByteBuffer.allocate(3);
 
         //等待客户端连接
         SocketChannel socketChannel = serverSocketChannel.accept();
 
         int messageLength = 8;//假设从客户端接收八个字节
         //循环读取
-        while(true){
-            int byteRead=0;
-            while ((byteRead<messageLength)){
+        while (true) {
+            int byteRead = 0;
+            while ((byteRead < messageLength)) {
                 long read = socketChannel.read(byteBuffers);
-                byteRead+=read;//累计读取的字节数
-                System.out.println("byteRead="+byteRead);
+                byteRead += read;//累计读取的字节数
+                System.out.println("byteRead=" + byteRead);
                 //使用流打印 看看当前的buffer的position和limit
-                Arrays.asList(byteBuffers).stream().map(buffer->"position="+buffer.position()+",limit="+buffer.limit()).forEach(System.out::println);
+                Arrays.asList(byteBuffers).stream().map(buffer -> "position=" + buffer.position() + ",limit=" + buffer.limit()).forEach(System.out::println);
 
                 //将所有的buffer反转
-                Arrays.asList(byteBuffers).forEach(buffer->buffer.flip());
+                Arrays.asList(byteBuffers).forEach(buffer -> buffer.flip());
 
                 //将数据读出 显示到客户端
                 long byteWrite = 0;
-                while(byteWrite<messageLength){
+                while (byteWrite < messageLength) {
                     long write = socketChannel.write(byteBuffers);
-                    byteWrite+=write;
+                    byteWrite += write;
                 }
                 //将所有的buffer进行clear
                 Arrays.asList(byteBuffers).forEach(byteBuffer -> byteBuffer.clear());
-                System.out.println("byteRead="+byteRead+" byteWrite="+byteWrite);
+                System.out.println("byteRead=" + byteRead + " byteWrite=" + byteWrite);
             }
         }
     }
