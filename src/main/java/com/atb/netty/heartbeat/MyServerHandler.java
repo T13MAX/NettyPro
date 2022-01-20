@@ -1,4 +1,4 @@
-package com.atb.heartbeat;
+package com.atb.netty.heartbeat;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
