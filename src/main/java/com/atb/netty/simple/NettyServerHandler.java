@@ -3,11 +3,7 @@ package com.atb.netty.simple;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
-
-import java.nio.charset.Charset;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 自定义一个Handler 需要继承netty规定好的某个HandlerAdapter
@@ -23,8 +19,10 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
+        /*StudentPOJO.Student student = (StudentPOJO.Student) msg;
+        System.out.println("客户端发送的pb数据:" + "id=" + student.getId() + " name=" + student.getName());*/
         //用户自定义的普通任务 taskQueue 10+20 因为是同一线程 我感觉是因为Queue 队列啊!
-        ctx.channel().eventLoop().execute(new Runnable() {
+        /*ctx.channel().eventLoop().execute(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -58,7 +56,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
                     System.out.println("发生异常:"+e.getMessage());
                 }
             }
-        },5, TimeUnit.SECONDS);
+        },5, TimeUnit.SECONDS);*/
 
         //Thread.sleep(10*1000);
         //ctx.writeAndFlush(Unpooled.copiedBuffer("hello client 喵喵", CharsetUtil.UTF_8));

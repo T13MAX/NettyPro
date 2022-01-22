@@ -1,18 +1,17 @@
-package com.atb.netty.simple;
+package com.atb.netty.tcp;
 
+import com.atb.netty.simple.NettyServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
 
 /**
  * @Author 呆呆
- * @Datetime 2022/1/15 14:24
+ * @Datetime 2022/1/22 17:23
  */
-public class NettyServer {
-
+public class TCPServer {
     public static void main(String[] args) throws Exception {
 
         //创建bossGroup和workerGroup 两个线程组
@@ -31,16 +30,7 @@ public class NettyServer {
                     .channel(NioServerSocketChannel.class)//使用NioServerSocketChannel作为服务器的通道实现
                     .option(ChannelOption.SO_BACKLOG, 128)//设置线程队列得到连接个数
                     .childOption(ChannelOption.SO_KEEPALIVE, true)//设置保持活动连接状态
-                    .childHandler(new ChannelInitializer<SocketChannel>() {//创建一个通道测试对象(匿名对象)
-                        //给pipeline 设置处理器
-                        @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {//给workerGroup加handler  如果给boss加就要用.handler()方法
-                            ChannelPipeline pipeline = ch.pipeline();
-                            //指定 对那种对象进行解码
-                            //pipeline.addLast("decoder", new ProtobufDecoder(StudentPOJO.Student.getDefaultInstance()));
-                            pipeline.addLast(new NettyServerHandler());
-                        }
-                    })//给我们的workerGroup的EventLoop对应的管道设置对应的处理器
+                    .childHandler(new TCPServerInitializer())//给我们的workerGroup的EventLoop对应的管道设置对应的处理器
             ;
             System.out.println("server is ready!!!");
 

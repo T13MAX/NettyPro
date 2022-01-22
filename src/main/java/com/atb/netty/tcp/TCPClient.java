@@ -1,5 +1,6 @@
-package com.atb.netty.simple;
+package com.atb.netty.tcp;
 
+import com.atb.netty.simple.NettyClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -8,15 +9,13 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
 /**
  * @Author 呆呆
- * @Datetime 2022/1/15 15:05
+ * @Datetime 2022/1/22 17:16
  */
-public class NettyClient {
-
+public class TCPClient {
     public static void main(String[] args) throws Exception {
 
         //客户端需要一个时间循环组
@@ -30,17 +29,7 @@ public class NettyClient {
             //设置相关参数
             bootstrap.group(group)//设置线程
                     .channel(NioSocketChannel.class)//设置客户端通道的实现类(反射)
-                    .handler(new ChannelInitializer<SocketChannel>() {
-
-                        @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
-                            ChannelPipeline pipeline = ch.pipeline();
-                            //在pipeline中加入ProtobufEncoder
-                            pipeline.addLast("encoder",new ProtobufEncoder());
-                            //加入自己的处理器
-                            pipeline.addLast(new NettyClientHandler());
-                        }
-                    })
+                    .handler(new TCPClientInitializer())
             ;
             System.out.println("client is ok");
 
